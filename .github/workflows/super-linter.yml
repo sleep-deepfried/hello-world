@@ -1,0 +1,34 @@
+# Define the name of the workflow as "Super-Linter"
+name: Super-Linter
+
+# Trigger the workflow on every push to the repository
+on: push
+
+# Define the jobs that this workflow consists of
+jobs:
+  # Define a job named "super-lint"
+  super-lint:
+    # Set a display name for the job
+    name: Lint code base
+
+    # Specify the runner environment as 'ubuntu-latest'
+    runs-on: ubuntu-latest
+
+    # Define the steps to be executed in this job
+    steps:
+      # Step 1: Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Run the Super-Linter
+      - name: Run Super-Linter
+        # Use the GitHub Super-Linter action (v4)
+        uses: github/super-linter@v4
+        
+        # Set environment variables for the Super-Linter
+        env:
+          # Set the default branch as 'main'
+          DEFAULT_BRANCH: main
+          
+          # Use the built-in 'GITHUB_TOKEN' secret for authentication
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
